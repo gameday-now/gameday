@@ -67,7 +67,10 @@ export const analyzeCycleTime = (matches: Match[]) => {
 	const fallback = { cycleTime: 0, potentialBreaks: [], fields: 0 }
 
 	const sorted = matches
-		.filter(({ rematchAnchorPoint }) => !rematchAnchorPoint)
+		.filter(
+			({ rematchAnchorPoint, tournamentLevel }) =>
+				!rematchAnchorPoint && tournamentLevel === "QUALIFICATION",
+		)
 		.sort(sortMatchesAsc)
 
 	if (sorted.length < 2) {
