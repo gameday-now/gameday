@@ -76,7 +76,7 @@ export const getActiveEvents = async (seasonCollection: Collection<Event>) =>
 			gamedayActive: true,
 			dateEnd: {
 				$gte: new Date(
-					subDays(new Date(), 8).toDateString(),
+					subDays(new Date(), 30).toDateString(),
 				).toISOString(),
 			},
 		})
