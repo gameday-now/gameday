@@ -1,0 +1,24 @@
+# Firebase
+adminsdk.json
+
+# Dependencies
+node_modules
+
+# Local env files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.pwa
+secret.yaml
+
+# Turbo
+.turbo
+
+# Build Outputs
+dist
+apps/api/public/
+
+# Misc
+.DS_Store

@@ -1,0 +1,5 @@
+export const SCHEDULE_REMATCH_PERMISSION = "schedule-rematch"
+export const ADD_BREAK_PERMISSION = "break"
+export const USE_QUEUER_PAGE_PERMISSION = "queue"
+export const VIEW_EVENT_PERMISSION = "read"
+export const REVIEW_EVENT_SCHEDULE_PERMISSION = "review"

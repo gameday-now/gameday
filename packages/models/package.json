@@ -1,0 +1,12 @@
+{
+	"name": "@gameday/models",
+	"version": "0.0.0",
+	"type": "module",
+	"private": true,
+	"exports": {
+		".": "./index.ts"
+	},
+	"peerDependencies": {
+		"zod": "^3.25.42"
+	}
+}
