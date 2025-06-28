@@ -29,7 +29,9 @@ export default ({ className }: { className?: string }) => (
 			<div className="flex gap-2">
 				<Dialog>
 					<DialogTrigger asChild>
-						<a className="text-primary underline">Learn more</a>
+						<a className="text-primary underline cursor-pointer">
+							Learn more
+						</a>
 					</DialogTrigger>
 					<DialogContent>
 						<DialogHeader>
@@ -50,7 +52,7 @@ export default ({ className }: { className?: string }) => (
 										className="text-primary underline"
 									>
 										frc.nexus
-									</a>{" "}
+									</a>
 									, but we are not affiliated.
 								</div>
 								<div className="text-xs mt-2 text-center">
