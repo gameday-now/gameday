@@ -1,5 +1,8 @@
 FROM oven/bun:latest
 
+RUN apt update
+RUN apt install -y curl
+
 WORKDIR /app
 ADD package.json bun.lock ./
 ADD bun.lock ./
@@ -14,4 +17,4 @@ RUN bun run build
 
 WORKDIR /app/apps/api
 EXPOSE 3000
-ENTRYPOINT [ "bun", "run", "start" ]
+ENTRYPOINT [ "./entrypoint.sh" ]
