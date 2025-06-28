@@ -27,11 +27,15 @@ export default new Elysia().use(mongo).use((app) =>
 				protect: true,
 				run: async () => {
 					const { currentSeason } = await getSeasonInfo()
+					logger.info(
+						`Syncing active events for season ${currentSeason}`,
+					)
 					const seasonCollection = await getSeasonCollection({
 						mongo: app.decorator.mongo,
 						season: String(currentSeason),
 					})
 					const events = await getActiveEvents(seasonCollection)
+					logger.info(`Found ${events.length} active events`)
 					for (const { code } of events) {
 						logger.info(`${currentSeason} ${code}`)
 						await syncEvent({
@@ -41,6 +45,7 @@ export default new Elysia().use(mongo).use((app) =>
 							mongo: app.decorator.mongo,
 						})
 					}
+					logger.info(`Done syncing ${events.length} active events`)
 				},
 			}),
 		),
