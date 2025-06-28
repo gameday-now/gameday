@@ -1,4 +1,5 @@
 import hero from "@/assets/hero.png"
+import AboutFooter from "@/components/aboutFooter"
 import LogoLoadingSpinner from "@/components/logoLoadingSpinner"
 import PageContainer from "@/components/pageContainer"
 import { Card, CardContent } from "@/components/ui/card"
@@ -12,7 +13,7 @@ function Index() {
 	const { events } = useEvents()
 
 	return (
-		<div className="flex flex-col w-full items-center">
+		<div className="flex flex-col w-full items-center h-[calc(100vh_-_70px)]">
 			<div
 				style={{
 					backgroundImage: `url(${hero})`,
@@ -24,8 +25,8 @@ function Index() {
 				</h1>
 				<h3 className="mb-2">Select an event to start</h3>
 			</div>
-			<div className="w-full min-h-screen">
-				<PageContainer className="flex flex-col gap-2">
+			<div className="grow w-full flex flex-col justify-between gap-6">
+				<PageContainer className="flex flex-col gap-2 h-full w-full">
 					{!events && (
 						<div className="flex w-full justify-center mt-30">
 							<LogoLoadingSpinner className="w-10" />
@@ -62,6 +63,7 @@ function Index() {
 							</Link>
 						))}
 				</PageContainer>
+				<AboutFooter className="mb-8" />
 			</div>
 		</div>
 	)
