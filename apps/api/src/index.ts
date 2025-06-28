@@ -21,5 +21,5 @@ process.on("unhandledRejection", (error) => {
 })
 
 app.listen(config.PORT, () => {
-	logger.info(`🦊 Server started at ${app.server?.url.origin}`)
+	logger.info(`🤖 Server started at ${app.server?.url.origin}`)
 })
