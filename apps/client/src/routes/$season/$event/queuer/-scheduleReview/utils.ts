@@ -6,18 +6,20 @@ export const extractMatchBlocks = (
 	matches: Match[],
 	config: EventConfig,
 ): MatchBlock[] => {
+	const quals = matches.filter(
+		({ tournamentLevel }) => tournamentLevel === "QUALIFICATION",
+	)
+
 	const breakIndices = config.potentialBreaks
-		.map((breakDesc) =>
-			matches.findIndex((m) => m.description === breakDesc),
-		)
+		.map((breakDesc) => quals.findIndex((m) => m.description === breakDesc))
 		.filter((i) => i !== -1)
 		.sort((a, b) => a - b)
 
-	const indices = [0, ...breakIndices.map((i) => i + 1), matches.length]
+	const indices = [0, ...breakIndices.map((i) => i + 1), quals.length]
 
 	return indices
 		.slice(0, -1)
-		.map((start, i) => matches.slice(start, indices[i + 1]))
+		.map((start, i) => quals.slice(start, indices[i + 1]))
 		.map<MatchBlock>((matchesInBlock, i) => ({
 			id: matchesInBlock[0].description,
 			index: i + 1,
