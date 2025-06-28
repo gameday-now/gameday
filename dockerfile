@@ -12,4 +12,6 @@ RUN bun install --frozen-lockfile
 ADD . .
 RUN bun run build
 
+WORKDIR /app/apps/api
+EXPOSE 3000
 ENTRYPOINT [ "bun", "run", "start" ]
