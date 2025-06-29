@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SeasonEventIndexRouteImport } from './routes/$season/$event/index'
+import { Route as SeasonEventTeamsIndexRouteImport } from './routes/$season/$event/teams/index'
 import { Route as SeasonEventQueuerIndexRouteImport } from './routes/$season/$event/queuer/index'
 
 const LoginRoute = LoginRouteImport.update({
@@ -29,6 +30,11 @@ const SeasonEventIndexRoute = SeasonEventIndexRouteImport.update({
   path: '/$season/$event/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SeasonEventTeamsIndexRoute = SeasonEventTeamsIndexRouteImport.update({
+  id: '/$season/$event/teams/',
+  path: '/$season/$event/teams/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SeasonEventQueuerIndexRoute = SeasonEventQueuerIndexRouteImport.update({
   id: '/$season/$event/queuer/',
   path: '/$season/$event/queuer/',
@@ -40,12 +46,14 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/$season/$event': typeof SeasonEventIndexRoute
   '/$season/$event/queuer': typeof SeasonEventQueuerIndexRoute
+  '/$season/$event/teams': typeof SeasonEventTeamsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/$season/$event': typeof SeasonEventIndexRoute
   '/$season/$event/queuer': typeof SeasonEventQueuerIndexRoute
+  '/$season/$event/teams': typeof SeasonEventTeamsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,18 +61,30 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/$season/$event/': typeof SeasonEventIndexRoute
   '/$season/$event/queuer/': typeof SeasonEventQueuerIndexRoute
+  '/$season/$event/teams/': typeof SeasonEventTeamsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/$season/$event' | '/$season/$event/queuer'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/$season/$event'
+    | '/$season/$event/queuer'
+    | '/$season/$event/teams'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/$season/$event' | '/$season/$event/queuer'
+  to:
+    | '/'
+    | '/login'
+    | '/$season/$event'
+    | '/$season/$event/queuer'
+    | '/$season/$event/teams'
   id:
     | '__root__'
     | '/'
     | '/login'
     | '/$season/$event/'
     | '/$season/$event/queuer/'
+    | '/$season/$event/teams/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -72,6 +92,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   SeasonEventIndexRoute: typeof SeasonEventIndexRoute
   SeasonEventQueuerIndexRoute: typeof SeasonEventQueuerIndexRoute
+  SeasonEventTeamsIndexRoute: typeof SeasonEventTeamsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -97,6 +118,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SeasonEventIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/$season/$event/teams/': {
+      id: '/$season/$event/teams/'
+      path: '/$season/$event/teams'
+      fullPath: '/$season/$event/teams'
+      preLoaderRoute: typeof SeasonEventTeamsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/$season/$event/queuer/': {
       id: '/$season/$event/queuer/'
       path: '/$season/$event/queuer'
@@ -112,6 +140,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   SeasonEventIndexRoute: SeasonEventIndexRoute,
   SeasonEventQueuerIndexRoute: SeasonEventQueuerIndexRoute,
+  SeasonEventTeamsIndexRoute: SeasonEventTeamsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
