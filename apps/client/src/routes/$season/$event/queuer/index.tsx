@@ -2,7 +2,7 @@ import BackTo from "@/components/backTo"
 import BreakCard from "@/components/breakCard"
 import ConfirmationSlide from "@/components/confirmationSlide"
 import FixedFooter from "@/components/fixedFooter"
-import LoadingSpinner from "@/components/loadingSpinner"
+import LogoLoadingSpinner from "@/components/logoLoadingSpinner"
 import PageContainer from "@/components/pageContainer"
 import ScrollTop from "@/components/scrollTop"
 import { Button } from "@/components/ui/button"
@@ -128,8 +128,8 @@ function RouteComponent() {
 
 	if (!matches) {
 		return (
-			<div className="text-center py-12 rounded-lg w-full flex justify-center">
-				<LoadingSpinner />
+			<div className="text-center h-[calc(100vh_-_70px)] rounded-lg w-full flex flex-col justify-center items-center">
+				<LogoLoadingSpinner className="w-10" />
 			</div>
 		)
 	}
