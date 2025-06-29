@@ -15,7 +15,7 @@
 		"@radix-ui/react-popover": "^1.1.14",
 		"@radix-ui/react-slot": "^1.2.3",
 		"@radix-ui/react-toggle": "^1.1.6",
-		"@tailwindcss/postcss": "^4.1.4",
+		"@tailwindcss/postcss": "^4.1.11",
 		"@tanstack/react-form": "^1.12.4",
 		"@tanstack/react-router": "^1.116.0",
 		"@tanstack/react-router-devtools": "^1.116.0",
