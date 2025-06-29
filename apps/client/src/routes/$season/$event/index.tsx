@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { useEvent } from "@/hooks/useEvent"
 import { FileRouteTypes } from "@/routeTree.gen"
 import { createFileRoute, Link } from "@tanstack/react-router"
-import { createLucideIcon, Users } from "lucide-react"
+import { ClipboardList, createLucideIcon, Users } from "lucide-react"
 
 export const Route = createFileRoute("/$season/$event/")({
 	component: RouteComponent,
@@ -15,11 +15,11 @@ const screens: {
 	Icon: ReturnType<typeof createLucideIcon>
 	link: FileRouteTypes["to"]
 }[] = [
-	// {
-	// 	name: "Team List",
-	// 	Icon: ClipboardList,
-	// 	link: "/$season/$event/teams",
-	// },
+	{
+		name: "Teams",
+		Icon: ClipboardList,
+		link: "/$season/$event/teams",
+	},
 	{
 		name: "Field Queue",
 		Icon: Users,
