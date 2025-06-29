@@ -18,3 +18,25 @@ export const matchTeamZod = z.object({
 })
 
 export type MatchTeam = z.infer<typeof matchTeamZod>
+
+export const teamListZod = z.object({
+	_id: z.string(),
+	creationDate: z.date(),
+	listName: z.string(),
+	listChecks: z.record(z.boolean()).optional(),
+})
+
+export type TeamList = z.infer<typeof teamListZod>
+
+export const teamsResponseZod = z.object({
+	teams: teamZod.array(),
+	teamLists: teamListZod.array(),
+})
+
+export type TeamsResponse = z.infer<typeof teamsResponseZod>
+
+export const newTeamListZod = z.object({
+	listName: z.string().min(1),
+})
+
+export type NewTeamList = z.infer<typeof newTeamListZod>
