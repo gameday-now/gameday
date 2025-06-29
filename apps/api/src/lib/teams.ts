@@ -1,4 +1,4 @@
-import { Team, teamZod } from "@gameday/models"
+import { Team, TeamList, teamListZod, teamZod } from "@gameday/models"
 import { AnyBulkWriteOperation, Collection } from "mongodb"
 import { deepDiff } from "./objectUtils"
 
@@ -6,6 +6,18 @@ export const getAllTeams = async (
 	teamsCollection: Collection<Team>,
 ): Promise<Team[]> =>
 	teamZod.array().parse(await teamsCollection.find().toArray())
+
+export const getAllTeamLists = async (
+	teamsListsCollection: Collection<TeamList>,
+): Promise<TeamList[]> =>
+	teamListZod
+		.array()
+		.parse(
+			await teamsListsCollection
+				.find()
+				.sort({ creationDate: -1 })
+				.toArray(),
+		)
 
 export const mergeTeams = (receivedTeams: Team[], storedTeams: Team[]) => {
 	const bulkOps: AnyBulkWriteOperation<Team>[] = []
