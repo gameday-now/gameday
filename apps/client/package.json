@@ -41,7 +41,7 @@
 		"zod": "^3.24.3"
 	},
 	"devDependencies": {
-		"@tanstack/router-plugin": "^1.116.1",
+		"@tanstack/router-plugin": "^1.123.0",
 		"@types/lodash": "^4.17.16",
 		"@types/react": "^19.1.6",
 		"@types/react-dom": "^19.1.5",
