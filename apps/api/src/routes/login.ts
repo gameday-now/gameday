@@ -41,7 +41,7 @@ export default (app: ElysiaApp) =>
 				return status(200, { success: true })
 			} catch (error) {
 				log.error(error)
-				return status(401, { success: false, message: "Unauthorized" })
+				return status(403, { success: false, message: "Unauthorized" })
 			}
 		},
 		{ body: Box(z.object({ token: z.string() })) },
