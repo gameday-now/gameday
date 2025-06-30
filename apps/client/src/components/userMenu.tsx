@@ -17,12 +17,15 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { auth } from "@/firebase"
+import { cn } from "@/lib/utils"
+import { MeRole } from "@gameday/models"
 import { useNavigate, useRouterState } from "@tanstack/react-router"
 import Avvvatars from "avvvatars-react"
 import { User, signOut } from "firebase/auth"
-import { useState } from "react"
+import { Fragment, useState } from "react"
+import title from "title"
 
-const UserMenu = ({ user }: { user: User }) => {
+const UserMenu = ({ user, roles }: { user: User; roles: MeRole[] }) => {
 	const navigate = useNavigate()
 	const router = useRouterState()
 	const [showSignOutDialog, setShowSignOutDialog] = useState<boolean>(false)
@@ -69,6 +72,29 @@ const UserMenu = ({ user }: { user: User }) => {
 						</div>
 					</DropdownMenuLabel>
 					<DropdownMenuSeparator />
+					{roles.map(({ id, name, resource }) => (
+						<Fragment key={id}>
+							<DropdownMenuLabel>
+								<p className="text-sm font-normal leading-none">
+									{`${name} `}
+									<span
+										className={cn(
+											"text-xs leading-none font-light text-muted-foreground",
+											{
+												"text-primary": !resource,
+											},
+										)}
+									>
+										{resource
+											? `${title(resource.name)}#${resource.key}`
+											: "Super Role"}
+									</span>
+								</p>
+							</DropdownMenuLabel>
+							<DropdownMenuSeparator />
+						</Fragment>
+					))}
+
 					<DropdownMenuItem
 						onClick={() => onSignoutHandler({ override: false })}
 					>

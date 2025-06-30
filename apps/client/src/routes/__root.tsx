@@ -14,7 +14,7 @@ import PWAPrompt from "react-ios-pwa-prompt"
 export const Route = createRootRoute({
 	component: () => {
 		const router = useRouterState()
-		const { user, isLoading } = useCurrentUser()
+		const { user, isLoading, roles } = useCurrentUser()
 
 		return (
 			<>
@@ -46,7 +46,7 @@ export const Route = createRootRoute({
 												</div>
 											</div>
 										</Link>
-										<UserMenu user={user} />
+										<UserMenu user={user} roles={roles} />
 									</div>
 								</div>
 							</div>
