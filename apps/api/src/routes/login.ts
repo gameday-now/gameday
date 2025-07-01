@@ -1,4 +1,5 @@
 import { config } from "@/config"
+import { getSeasonInfo } from "@/lib/ftc"
 import type { ElysiaApp } from "@/server"
 import { Box } from "@sinclair/typebox-adapter"
 import z from "zod"
@@ -20,6 +21,7 @@ export default (app: ElysiaApp) =>
 					expires: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), //Two Days
 				})
 				const firebaseUser = await firebase.auth.getUser(uid)
+				const { currentSeason } = await getSeasonInfo()
 				const [first_name, ...last_name] =
 					firebaseUser.displayName?.split(" ") ?? [
 						"Temporary",
@@ -34,6 +36,12 @@ export default (app: ElysiaApp) =>
 					first_name,
 					last_name: last_name.join(" "),
 					email: firebaseUser.email,
+					role_assignments: [
+						{
+							role: "unassigned",
+							tenant: String(currentSeason),
+						},
+					],
 				})
 				log.info(
 					`User ${uid} synced with Permit PDP successfully ${syncResult.user.environment_id}`,
