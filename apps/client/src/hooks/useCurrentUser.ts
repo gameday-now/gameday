@@ -1,4 +1,5 @@
 import { auth } from "@/firebase"
+import { MeResponse, MeRole } from "@gameday/models"
 import { useNavigate, useRouterState } from "@tanstack/react-router"
 import axios from "axios"
 import {
@@ -13,6 +14,7 @@ const useCurrentUser = () => {
 	const [isSettingPersistence, setIsSettingPersistence] =
 		useState<boolean>(true)
 	const [user, setUser] = useState<User | null>()
+	const [roles, setRoles] = useState<MeRole[]>([])
 	const router = useRouterState()
 	const navigate = useNavigate()
 
@@ -23,6 +25,10 @@ const useCurrentUser = () => {
 				await axios.post("/api/login", {
 					token: idToken,
 				})
+				const {
+					data: { roles },
+				} = await axios.get<MeResponse>("/api/me")
+				setRoles(roles)
 			} catch {}
 		}
 		setUser(user)
@@ -48,7 +54,7 @@ const useCurrentUser = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
-	return { isLoading: isLoading || isSettingPersistence, user }
+	return { isLoading: isLoading || isSettingPersistence, user, roles }
 }
 
 export default useCurrentUser
