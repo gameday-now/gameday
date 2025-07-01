@@ -9,11 +9,13 @@ import {
 	useRouterState,
 } from "@tanstack/react-router"
 import { detect } from "detect-browser"
+import { useState } from "react"
 import PWAPrompt from "react-ios-pwa-prompt"
 
 export const Route = createRootRoute({
 	component: () => {
 		const router = useRouterState()
+		const [showPWAPrompt, setShowPWAPrompt] = useState<boolean>(true)
 		const { user, isLoading, roles } = useCurrentUser()
 
 		return (
@@ -57,8 +59,11 @@ export const Route = createRootRoute({
 								detect()?.type === "browser" && (
 									<PWAPrompt
 										copySubtitle="https://gameday.now"
-										appIconPath="favicon.svg"
-										isShown
+										appIconPath="https://gameday.now/icons/ios/72.png"
+										isShown={showPWAPrompt}
+										onClose={() => {
+											setShowPWAPrompt(false)
+										}}
 									/>
 								)}
 						</main>
