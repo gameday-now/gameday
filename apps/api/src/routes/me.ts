@@ -28,6 +28,7 @@ export default (app: ElysiaApp) =>
 					firstName: user.first_name,
 					lastName: user.last_name,
 					roles: roles
+						.filter(({ role: { key } }) => key !== "unassigned")
 						.map<MeRole>(
 							({ id, role, tenant, resource_instance }) => ({
 								id,
