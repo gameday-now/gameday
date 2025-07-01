@@ -7,6 +7,7 @@ const manifest: Partial<ManifestOptions> = {
 	theme_color: "#FFFFFF",
 	display: "standalone",
 	start_url: "/",
+	scope: "/",
 	icons: [
 		{
 			src: "/icons/android/android-launchericon-512-512.png",
