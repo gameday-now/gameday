@@ -32,6 +32,20 @@ function Index() {
 							<LogoLoadingSpinner className="w-10" />
 						</div>
 					)}
+					{events?.length === 0 && (
+						<div className="text-center w-75 mx-auto text-sm">
+							You don’t have permission to view events for this
+							season. Please ask your FTA to assign the
+							appropriate permissions, or contact us for
+							assistance at{" "}
+							<a
+								href="mailto:contact@gameday.now"
+								className="text-primary underline"
+							>
+								contact@gameday.now
+							</a>
+						</div>
+					)}
 					{events &&
 						events.map((event) => (
 							<Link
