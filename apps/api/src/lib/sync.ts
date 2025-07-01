@@ -75,38 +75,43 @@ export const syncEvent = async ({
 	const storedMatches = await getAllMatches(matchesCollection)
 	const receivedMatches = [...qualSchedule, ...playoffSchedule]
 	const matchBulkOps = mergeMatches(receivedMatches, storedMatches)
-	const matchesResult = await matchesCollection.bulkWrite(matchBulkOps)
-	if (
-		matchesResult.deletedCount > 0 ||
-		matchesResult.insertedCount > 0 ||
-		matchesResult.modifiedCount > 0
-	) {
-		log.info("Bulk operation result")
-		log.info(matchesResult)
-		const newMatches = await getAllMatches(matchesCollection)
-		const eventConfigCollection = database.collection<EventConfig>("config")
-		if (newMatches.length > 0) {
-			const { cycleTime, potentialBreaks, fields } =
-				analyzeCycleTime(newMatches)
-			await eventConfigCollection.updateOne(
-				{},
-				{
-					$set: {
-						cycleTime,
-						potentialBreaks,
-						fields,
+	if (matchBulkOps.length > 0) {
+		const matchesResult = await matchesCollection.bulkWrite(matchBulkOps)
+		if (
+			matchesResult.deletedCount > 0 ||
+			matchesResult.insertedCount > 0 ||
+			matchesResult.modifiedCount > 0
+		) {
+			log.info("Bulk operation result")
+			log.info(matchesResult)
+			const newMatches = await getAllMatches(matchesCollection)
+			const eventConfigCollection =
+				database.collection<EventConfig>("config")
+			if (newMatches.length > 0) {
+				const { cycleTime, potentialBreaks, fields } =
+					analyzeCycleTime(newMatches)
+				await eventConfigCollection.updateOne(
+					{},
+					{
+						$set: {
+							cycleTime,
+							potentialBreaks,
+							fields,
+						},
+						$setOnInsert: {
+							leadQueuerReviewed: false,
+						},
 					},
-					$setOnInsert: {
-						leadQueuerReviewed: false,
-					},
-				},
-				{ upsert: true },
-			)
+					{ upsert: true },
+				)
+			} else {
+				await eventConfigCollection.deleteMany()
+			}
 		} else {
-			await eventConfigCollection.deleteMany()
+			log.info("Matches unchanged")
 		}
 	} else {
-		log.info("Matches unchanged")
+		log.info("No matches generated")
 	}
 	log.info("Done")
 
@@ -115,16 +120,20 @@ export const syncEvent = async ({
 	const storedTeams = await getAllTeams(teamsCollection)
 	log.info(`${receivedTeams.length} teams are registered on this event`)
 	const teamBulkOps = mergeTeams(receivedTeams, storedTeams)
-	const teamsResult = await teamsCollection.bulkWrite(teamBulkOps)
-	if (
-		teamsResult.deletedCount > 0 ||
-		teamsResult.insertedCount > 0 ||
-		teamsResult.modifiedCount > 0
-	) {
-		log.info("Bulk operation result")
-		log.info(teamsResult)
+	if (teamBulkOps.length > 0) {
+		const teamsResult = await teamsCollection.bulkWrite(teamBulkOps)
+		if (
+			teamsResult.deletedCount > 0 ||
+			teamsResult.insertedCount > 0 ||
+			teamsResult.modifiedCount > 0
+		) {
+			log.info("Bulk operation result")
+			log.info(teamsResult)
+		} else {
+			log.info("Teams unchanged")
+		}
 	} else {
-		log.info("Teams unchanged")
+		log.info("No teams assigned")
 	}
 	log.info("Done")
 }
