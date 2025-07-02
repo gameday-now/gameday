@@ -6,7 +6,7 @@ import { matchZod } from "./match"
 export const queuerResponseZod = z.object({
 	matches: matchZod.array(),
 	breaks: z.record(breakZod),
-	config: eventConfigZod,
+	config: eventConfigZod.nullable(),
 })
 
 export type QueuerResponse = z.infer<typeof queuerResponseZod>
